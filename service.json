@@ -1,0 +1,40 @@
+{
+  "id": "/app/$environment/test-server",
+  "labels": {
+    "version": "$tag",
+    "environment": "$environment"
+  },
+  "env": {
+    "SERVICE_TAGS": "$environment",
+    "SERVICE_NAME": "test-server"
+  },
+  "cpus": 0.05,
+  "mem": 64.0,
+  "instances": $instances,
+  "args": [
+    "service-wrapper.sh", "dockerhost:18080", "dockerhost:18500", "app/$environment/test-server",
+    "node", "/app/server.js"
+  ],
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "registry.local/test-server:$tag",
+      "forcePullImage": true,
+      "network": "BRIDGE",
+      "portMappings": [{
+        "containerPort": 3000
+      }]
+    }
+  },
+  "healthChecks": [{
+    "protocol": "HTTP",
+    "path": "/healthcheck",
+    "gracePeriodSeconds": 2,
+    "intervalSeconds": 10,
+    "maxConsecutiveFailures": 3
+  }],
+  "upgradeStrategy": {
+    "minimumHealthCapacity": 0.5,
+    "maximumOverCapacity": 0.5
+  }
+}

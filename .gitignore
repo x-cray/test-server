@@ -1,0 +1,4 @@
+service-defs
+*.log
+*.sublime-workspace
+.DS_Store
