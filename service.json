@@ -5,7 +5,7 @@
     "environment": "$environment"
   },
   "env": {
-    "SERVICE_TAGS": "$environment",
+    "SERVICE_TAGS": "$environment,internal-listen-http-3000",
     "SERVICE_NAME": "test-server"
   },
   "cpus": 0.05,
